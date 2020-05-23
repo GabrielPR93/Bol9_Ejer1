@@ -3,33 +3,36 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 
-public class Formulario extends JFrame implements ActionListener {
+public class Formulario extends JFrame {
     JButton btn1, btn2;
     JLabel lbl;
 
+    Color primerColor = Color.RED;
+    Color segundoColor = Color.GREEN;
+    String titulo = "Control de Raton";
+
     public Formulario() {
-        super("Control de Raton");
+        super();
         this.setLayout(null);
+        this.setTitle(titulo);
 
         btn1 = new JButton("Izquierda");
         btn1.setSize(90, 20);
-        btn1.setLocation(150, 0);
-        btn1.addActionListener(this);
+        btn1.setLocation(150, 20);
         btn1.addMouseListener(new cordenadas());
         btn1.addMouseMotionListener(new cordenadas());
         this.add(btn1);
 
         btn2 = new JButton("Derecha");
         btn2.setSize(90, 20);
-        btn2.setLocation(250, 0);
-        btn2.addActionListener(this);
+        btn2.setLocation(250, 20);
         btn2.addMouseListener(new cordenadas());
         btn2.addMouseMotionListener(new cordenadas());
         this.add(btn2);
 
-        lbl = new JLabel("Tecla Pulsada: Ninguna");
+        lbl = new JLabel("Tecla Pulsada: Ninguna ");
         lbl.setSize(250, 100);
-        lbl.setLocation(150, 20);
+        lbl.setLocation(150, 40);
         setFocusable(true);
         this.add(lbl);
 
@@ -54,27 +57,26 @@ public class Formulario extends JFrame implements ActionListener {
         @Override
         public void mouseMoved(MouseEvent e) {
 
-            setTitle(((String.format("Control de ratón - (X:%d Y:%d) ", e.getX(), e.getY()))));
-            if (e.getSource() == btn1) {
-                setTitle(((String.format("Control de ratón - (X:%d Y:%d) ", e.getX() + 149, e.getY()))));
+            setTitle(((String.format(titulo + " - (X:%d Y:%d) ", e.getX(), e.getY()))));
+            if (e.getSource().getClass() == JButton.class) {
+                setTitle(((String.format(titulo + " - (X:%d Y:%d) ", e.getX() + ((JButton) e.getSource()).getX(),
+                        e.getY() + ((JButton) e.getSource()).getY()))));
             }
-            if (e.getSource() == btn2) {
-                setTitle(((String.format("Control de ratón - (X:%d Y:%d) ", e.getX() + 249, e.getY()))));
 
-            }
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
-            setTitle("Control de Raton");
+            setTitle(titulo);
         }
 
         @Override
         public void mousePressed(MouseEvent e) {
+
             if (e.getButton() == MouseEvent.BUTTON1) {
-                btn1.setBackground(Color.RED);
+                btn1.setBackground(primerColor);
             } else if (e.getButton() == MouseEvent.BUTTON3) {
-                btn2.setBackground(Color.GREEN);
+                btn2.setBackground(segundoColor);
             }
         }
 
@@ -104,11 +106,6 @@ public class Formulario extends JFrame implements ActionListener {
 
             }
         }
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
 
 }

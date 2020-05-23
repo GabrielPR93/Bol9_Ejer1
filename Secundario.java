@@ -8,12 +8,15 @@ public class Secundario extends JDialog implements ActionListener, ItemListener 
     JLabel lbl;
     JComboBox cb;
 
-    String[] colores = { "Rojo", "Verde", "Azul", "Amarillo" };
+    String[] color = { "Rojo", "Verde", "Azul", "Amarillo" };
+    Color[] colores = { Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW };
+
+    Formulario s = (Formulario) this.getOwner();
 
     public Secundario(Formulario s) {
         super(s, true);
         setLayout(new FlowLayout());
-        setTitle("Formulario Secundario");
+        setTitle("Formulario Secundario ");
 
         lbl = new JLabel("Introduce titulo estandar");
         add(lbl);
@@ -22,7 +25,7 @@ public class Secundario extends JDialog implements ActionListener, ItemListener 
         txtTitulo.addActionListener(this);
         add(txtTitulo);
 
-        cb = new JComboBox<String>(colores);
+        cb = new JComboBox<String>(color);
         cb.setMaximumRowCount(4);
         cb.setSelectedIndex(0);
         cb.addItemListener(this);
@@ -32,28 +35,16 @@ public class Secundario extends JDialog implements ActionListener, ItemListener 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Formulario s = (Formulario) this.getOwner();
-        s.setTitle(txtTitulo.getText());
 
+        s.titulo = txtTitulo.getText();
+        s.setTitle(s.titulo);
     }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-        Formulario s = (Formulario) this.getOwner();
 
-        if (cb.getSelectedIndex() == 0) {
-            s.btn1.setBackground(Color.RED);
-            s.btn2.setBackground(Color.RED);
-        } else if (cb.getSelectedIndex() == 1) {
-            s.btn1.setBackground(Color.GREEN);
-            s.btn2.setBackground(Color.GREEN);
-        } else if (cb.getSelectedIndex() == 2) {
-            s.btn1.setBackground(Color.BLUE);
-            s.btn2.setBackground(Color.BLUE);
-        } else if (cb.getSelectedIndex() == 3) {
-            s.btn1.setBackground(Color.YELLOW);
-            s.btn2.setBackground(Color.YELLOW);
-        }
+        s.primerColor = colores[cb.getSelectedIndex()];
+        s.segundoColor = colores[cb.getSelectedIndex()];
 
     }
 }
